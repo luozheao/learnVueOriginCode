@@ -5,10 +5,38 @@
     <title>Title</title>
 </head>
 <body>
-
+<div id="myApp">
+    <div id="header">{{headerName}}</div>
+    <div id="body">
+        <ul>
+            <li v-for="msg in peopleMsg"  @click="sayName(msg.name)">name:{{msg.name}},age:{{msg.age}}</li>
+        </ul>
+    </div>
+    <div id="footer"></div>
+</div>
 </body>
 <script src="js/vue.js"></script>
 <script>
-
+    var mv = new Vue({
+        el: '#myApp',
+        data: {
+            headerName: 'this is my first test to learn orgin code of vue !',
+            peopleMsg:[
+                {
+                    name:'luojie',
+                    age:'18'
+                },
+                {
+                    name:'luozheao',
+                    age:'28'
+                }
+                ]
+        },
+        methods:{
+            sayName:function (name) {
+                alert(name);
+            }
+        }
+    });
 </script>
 </html>

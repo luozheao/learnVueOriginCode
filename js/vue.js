@@ -4,9 +4,12 @@
  * Released under the MIT License.
  */
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.Vue = factory());
+    //global为window
+    //检测是否在es6和amd环境,如果在则你懂的.不在则用全局变量Vue承载
+	typeof exports === 'object' && typeof module !== 'undefined' ?
+        module.exports = factory()
+        :
+	    typeof define === 'function' && define.amd ? define(factory) :(global.Vue = factory());
 }(this, (function () { 'use strict';
 
 /*  */
@@ -44,17 +47,18 @@ function isPrimitive (value) {
 function isObject (obj) {
   return obj !== null && typeof obj === 'object'
 }
-
+//判断类型
 var _toString = Object.prototype.toString;
 
 /**
  * Strict object type check. Only returns true
  * for plain JavaScript objects.
  */
+//断定是对象
 function isPlainObject (obj) {
   return _toString.call(obj) === '[object Object]'
 }
-
+//断定是正则表达式
 function isRegExp (v) {
   return _toString.call(v) === '[object RegExp]'
 }
@@ -62,6 +66,7 @@ function isRegExp (v) {
 /**
  * Check if val is a valid array index.
  */
+//有效数组索引
 function isValidArrayIndex (val) {
   var n = parseFloat(val);
   return n >= 0 && Math.floor(n) === n && isFinite(val)
@@ -91,10 +96,7 @@ function toNumber (val) {
  * Make a map and return a function for checking if a key
  * is in that map.
  */
-function makeMap (
-  str,
-  expectsLowerCase
-) {
+function makeMap (str,expectsLowerCase) {
   var map = Object.create(null);
   var list = str.split(',');
   for (var i = 0; i < list.length; i++) {
@@ -138,6 +140,8 @@ function hasOwn (obj, key) {
 /**
  * Create a cached version of a pure function.
  */
+
+//stop:luozheao:20170802
 function cached (fn) {
   var cache = Object.create(null);
   return (function cachedFn (str) {
@@ -8703,6 +8707,7 @@ function processRef (el) {
   }
 }
 
+//luozheao:解析代码中的v-for,抽出alias和对象
 function processFor (el) {
   var exp;
   if ((exp = getAndRemoveAttr(el, 'v-for'))) {
@@ -8827,6 +8832,7 @@ function processComponent (el) {
 function processAttrs (el) {
   var list = el.attrsList;
   var i, l, name, rawName, value, modifiers, isProp;
+
   for (i = 0, l = list.length; i < l; i++) {
     name = rawName = list[i].name;
     value = list[i].value;
@@ -8838,6 +8844,7 @@ function processAttrs (el) {
       if (modifiers) {
         name = name.replace(modifierRE, '');
       }
+
       if (bindRE.test(name)) { // v-bind
         name = name.replace(bindRE, '');
         value = parseFilters(value);
@@ -8867,7 +8874,9 @@ function processAttrs (el) {
           addAttr(el, name, value);
         }
       } else if (onRE.test(name)) { // v-on
-        name = name.replace(onRE, '');
+
+          name = name.replace(onRE, '');
+         //去掉@和v-on,拿到事件名,好骚气
         addHandler(el, name, value, modifiers, false, warn$2);
       } else { // normal directives
         name = name.replace(dirRE, '');
