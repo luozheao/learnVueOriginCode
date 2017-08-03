@@ -9,7 +9,7 @@
     <div id="header">{{headerName}}</div>
     <div id="body">
         <ul>
-            <li v-for="msg in peopleMsg"  @click="sayName(msg.name)">name:{{msg.name}},age:{{msg.age}}</li>
+            <li v-for="msg in getPeopleMsg"  @click="sayName(msg.name)">name:{{msg.name}},age:{{msg.age}}</li>
         </ul>
     </div>
     <div id="footer"></div>
@@ -19,6 +19,7 @@
 <script>
     var mv = new Vue({
         el: '#myApp',
+        //数据层,用于静态显示或者操作
         data: {
             headerName: 'this is my first test to learn orgin code of vue !',
             peopleMsg:[
@@ -29,14 +30,28 @@
                 {
                     name:'luozheao',
                     age:'28'
+                },
+                {
+                    name:'liaoyunxia',
+                    age:16
                 }
-                ]
+            ]
         },
+        //数据层,用于动态显示
+        computed:{
+            getPeopleMsg:function(){
+                return this.peopleMsg;
+            }
+        },
+        //控制层
         methods:{
             sayName:function (name) {
-                alert(name);
+                  alert(name+'luozheao');
             }
         }
     });
+
+
+
 </script>
 </html>
