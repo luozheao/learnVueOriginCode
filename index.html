@@ -52,6 +52,37 @@
     });
 
 
+    var watcher={
+        eventArr:[],
+        publish:function (eventName,...params) {
+             this.eventArr.forEach(function (p1, p2, p3) {
+                  if(p1.eventName==eventName){
+                      p1.event(...params);
+                  }
+             })
+        },
+        subscribe:function(eventName,event){
+               this.eventArr.push({
+                   eventName:eventName,
+                   event:event
+               });
+        },
+        unSubscribe:function(eventName) {
+            var thisObj=this;
+            this.eventArr.forEach(function (p1, p2, p3) {
+                if(p1.eventName==eventName){
+                    thisObj.eventArr.splice(p2,1);
+                }
+            })
+        }
+    }
+    watcher.subscribe('sayName',function (name1,name2) {
+        alert(name1+'!'+name2);
+    });
+    watcher.publish('sayName','luozheao','luojie');
+
 
 </script>
+<script src="js/Observer.js"></script>
+<script src="js/Watcher.js"></script>
 </html>
